@@ -1,0 +1,164 @@
+@use "./mixins";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+$base-size: 16;
+
+* {
+  @apply m-0 p-0 box-border;
+}
+
+html {
+  font-size: 1vw;
+
+}
+
+body {
+  background: var(--port-primary);
+  color: var(--port-white);
+
+}
+
+:root {
+  --port-primary: #0c0a16;
+  --port-secondary: #7e60bf;
+  --port-ttl-secondary: #c6b6e7;
+  --port-black: #121212;
+  --port-white: #d7d0d0;
+  --port-error: #ef4545;
+  --port-success: #33a633;
+
+  --port-spacing-4pt5: 1.125rem;
+  --port-spacing-5pt5: 1.375rem;
+  --port-spacing-6pt5: 1.625rem;
+  --port-spacing-7pt5: 1.875rem;
+
+  --port-font-light: 300;
+  --port-font-regular: 400;
+  --port-font-medium: 500;
+  --port-font-semibold: 600;
+  --port-font-bold: 700;
+  --port-font-black: 900;
+
+  --port-text-h1: 4rem;
+  --port-text-h2: 3.5rem;
+  --port-text-h3: 3rem;
+  --port-text-h4: 2.5rem;
+  --port-text-h5: 2rem;
+  --port-text-h6: 1.5rem;
+  --port-text-p: 1rem;
+  --port-text-md: 1.2rem;
+
+
+
+  --port-shadow-sm: 0px 0px 2px 2px undefined;
+  --port-shadow-md: 0px 0px 8px 3px undefined;
+  --port-shadow-lg: 0px 0px 12px 6px undefined;
+
+  --gutter-x: 24px;
+}
+
+
+@layer base {
+  h1,
+  .h1 {
+    &:not(.ttl) {
+      @apply text-h1;
+    }
+  }
+
+  h2,
+  .h2 {
+    &:not(.ttl) {
+      @apply text-h2;
+    }
+  }
+
+  h3,
+  .h3 {
+    &:not(.ttl) {
+      @apply text-h3;
+    }
+  }
+
+  h4,
+  .h4 {
+    &:not(.ttl) {
+      @apply text-h4;
+    }
+  }
+
+  h5,
+  .h5 {
+    &:not(.ttl) {
+      @apply text-h5;
+    }
+  }
+
+  h6,
+  .h6 {
+    &:not(.ttl) {
+      @apply text-h6;
+    }
+  }
+
+  p,
+  .p {
+    &:not(.para) {
+      @apply text-p;
+    }
+  }
+}
+
+@layer components {
+  .container {
+    @apply sm:max-w-[540px] md:max-w-[720px] 
+    lg:max-w-[960px] xl:max-w-[1080px] 
+    xxl:max-w-[1260px] xxxl:max-w-[1403px];
+  }
+
+  //buttons
+  
+}
+
+@layer utilities {
+}
+
+.btn-download {
+    @apply relative bg-secondary py-4 px-8 rounded-[30px]  flex justify-center items-center  overflow-hidden;
+  
+    &::before {
+      content: "";
+      @apply bg-white h-full w-full left-0 top-0 absolute scale-y-0 origin-[50%_0] transition-[cubic-bezier(0.165,_0.84,_0.44,_1)] duration-300;
+    }
+    span {
+      @apply relative z-[1] text-white;
+    }
+    &:hover {
+      span {
+        @apply text-black;
+  
+        animation: slideUp 0.5s ease-in-out;
+      }
+      &::before {
+        @apply scale-y-100;
+      }
+    }
+  }
+  
+  @keyframes slideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(0px);
+      }
+      25% {
+        opacity: 0;
+        transform: translateY(100px);
+      }
+    
+      100% {
+        opacity: 1;
+        transform: translateY(0px);
+      }
+    }

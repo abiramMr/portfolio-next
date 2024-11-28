@@ -1,17 +1,23 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "./globals.css";
+import { Gelasio } from "next/font/google";
+import SmoothScrolling from "@/components/SmoothScrolling";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+import "@/styles/globals.scss";
+
+
+const gelasio = Gelasio({
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  display: "swap",
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+
+// const roboto = Roboto({
+//   weight: ["100", "300", "400", "500", "700"],
+//   style: ["normal", "italic"],
+//   subsets: ["latin"],
+//   display: "swap",
+// });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -26,9 +32,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning className={`${gelasio.className} antialiased`}
       >
-        {children}
+        <SmoothScrolling>
+          <main>
+            {children}
+          </main>
+        </SmoothScrolling>
       </body>
     </html>
   );
