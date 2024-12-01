@@ -1,8 +1,13 @@
 import React from 'react'
+import HomeBanner from '@/widgets/HomeBanner'
+import HomeAbout from '@/widgets/HomeAbout'
 
 const Home = () => {
   return (
-    <div className={'h-[300vh]'} >Home</div>
+    <>
+    <HomeBanner/>
+    <HomeAbout/>
+    </>
   )
 }
 

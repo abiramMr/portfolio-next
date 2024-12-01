@@ -1,5 +1,4 @@
 "use client";
-
 import { LenisOptions } from "lenis";
 import { ReactLenis } from "lenis/react";
 
