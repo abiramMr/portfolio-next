@@ -4,35 +4,44 @@ import { useAnimations, useFBX, useGLTF } from "@react-three/drei";
 import { SkeletonUtils } from "three-stdlib";
 
 export function Avatar(props) {
+  const { animation } = props;
   const avatar = useRef();
   const { scene } = useGLTF("/models/avatar-transformed.glb");
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
 
-  const { animations: SwaggerWalk } = useFBX("/models/SwaggerWalk.fbx");
   const { animations: HappyIdle } = useFBX("/models/HappyIdle.fbx");
-  const { animations: StopWalking } = useFBX("/models/StopWalking.fbx");
   const { animations: MaleStandingPose } = useFBX("/models/MaleStandingPose.fbx");
-
-  
+  const { animations: Walking } = useFBX("/models/Walking.fbx");
 
   HappyIdle[0].name = "HappyIdle";
-
-  SwaggerWalk[0].name = "SwaggerWalk";
-
-  StopWalking[0].name = "StopWalking";
-
   MaleStandingPose[0].name = "MaleStandingPose";
+  Walking[0].name = "Walking";
 
-  const { actions } = useAnimations([HappyIdle[0], SwaggerWalk[0], StopWalking[0], MaleStandingPose[0]], avatar);
+  const { actions } = useAnimations([HappyIdle[0], MaleStandingPose[0], Walking[0]], avatar);
+
+ 
 
   useEffect(() => {
-    actions["SwaggerWalk"].reset().play();
-  }, []);
+    // Stop any currently playing animations
+    Object.values(actions).forEach((action) => {
+      if (action) action.stop();
+    });
 
+    // Play new animation if it exists
+    if (actions && actions[animation]) {
+      actions[animation].reset().fadeIn(0.5).play();
+      return () => {
+        if (actions[animation]) {
+          actions[animation].fadeOut(0.5);
+        }
+      };
+    }
+  }, [animation, actions]);
+  
   const { nodes, materials } = useGraph(clone);
   return (
     <group {...props} ref={avatar} dispose={null}>
-      <group rotation-x={4.7}>
+      
         <primitive object={nodes.Hips} />
         <skinnedMesh
           geometry={nodes.Wolf3D_Body.geometry}
@@ -91,7 +100,6 @@ export function Avatar(props) {
           morphTargetDictionary={nodes.Wolf3D_Teeth.morphTargetDictionary}
           morphTargetInfluences={nodes.Wolf3D_Teeth.morphTargetInfluences}
         />
-      </group>
     </group>
   );
 }
